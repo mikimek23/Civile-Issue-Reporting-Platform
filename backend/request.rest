@@ -1,0 +1,39 @@
+
+### Register
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "name":"miki",
+    "email":"miki@gmail.com",
+    "password":"5678",
+    "role":"Admin"
+}
+### Login
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email":"miki@gmail.com",
+    "password":"5678"
+}
+
+###
+POST http://localhost:5000/report
+Content-Type: application/json
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzdkYjk4ZGIxZjJkYTJjMGE2YzRkNiIsImlhdCI6MTc1ODgxOTEwNSwiZXhwIjoxNzU4OTA1NTA1fQ.0CGnaMs4MACnKW_tGrPEl6q32Sfzohq0He07UyMgZRs
+
+{
+    "title":"water suply",
+    "description":"we need water",
+    "photourl":"mksdkkffjscjdf",
+    "location":"arusi"
+}
+###
+GET http://localhost:5000/report/issues
+Content-Type: application/json
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzdkYjk4ZGIxZjJkYTJjMGE2YzRkNiIsImlhdCI6MTc1OTA0MzA0MCwiZXhwIjoxNzU5MTI5NDQwfQ.naenEiG6-95yk169XzKUrMbfObiZ4SSh3Eb9udXsHi0
+###
+GET http://localhost:5000/report/all-reports
+Content-Type: application/json
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzdkYjk4ZGIxZjJkYTJjMGE2YzRkNiIsImlhdCI6MTc1OTA0MzA0MCwiZXhwIjoxNzU5MTI5NDQwfQ.naenEiG6-95yk169XzKUrMbfObiZ4SSh3Eb9udXsHi0

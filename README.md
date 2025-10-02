@@ -36,7 +36,7 @@ Ensure you have the following installed:
 - MongoDB
  Installation
 # Clone the repository
-git clone https://github.com/your-username/civil-issue-reporting-platform.git
+git clone https://github.com/mikimek23/Civile-Issue-Reporting-Platform.git
 
 # Navigate into the project folder
 cd civil-issue-reporting-platform

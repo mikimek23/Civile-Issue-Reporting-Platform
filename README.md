@@ -6,6 +6,8 @@ A simple web application for reporting and tracking community issues such as bro
 -  *Submit Reports* – Title, description, photo, and geolocation
 -  *Track Status*– Monitor progress from Pending → In Progress → Resolved
 -  *Report History* – View all your submitted issues
+
+  
  **Admin Side**
 -  *Admin Login*
 -  *Dashboard*– View and manage all community reports
@@ -19,8 +21,11 @@ A simple web application for reporting and tracking community issues such as bro
  ## Tech Stack
 
 **Frontend**:React, Tailwind CSS, Axios
+
 **Backend**:Node.js, Express.js
+
 **Database**:MongoDB
+
 **Authentication**:JWT (JSON Web Token)
 
 
@@ -41,9 +46,9 @@ npm install
 
 
  ## Running the App
-Frontend (React)
-cd frontend
-npm run dev
+- Frontend (React)
+- cd frontend
+- npm run dev
 
 
 Backend (Express)

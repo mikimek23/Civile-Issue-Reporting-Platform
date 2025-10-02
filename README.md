@@ -3,7 +3,7 @@ A simple web application for reporting and tracking community issues such as bro
 ## Features
 **User Side**
 -  *User Authentication* – Register and log in securely
--  *Submit Reports* – Title, description, photo, and geolocation
+-  *Submit Reports* – Title, description, photo, and location
 -  *Track Status*– Monitor progress from Pending → In Progress → Resolved
 -  *Report History* – View all your submitted issues
 

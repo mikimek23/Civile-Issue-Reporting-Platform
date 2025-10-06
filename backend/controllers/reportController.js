@@ -36,7 +36,7 @@ exports.report=async(req,res)=>{
         }
     
     try {
-     const {title,description,location,status}=req.body;
+     const {title,description,city,location, woreda, kebele, area, status}=req.body;
      const photourl = req.file ? req.file.path : null;
     const userid=req.id
     
@@ -54,7 +54,7 @@ exports.report=async(req,res)=>{
         title:title,
         description:description,
         photourl:photourl,
-        location:location,
+        location:`${city}/${location}/${woreda}/${kebele}/${area}`,
         status:status,
         userId: req.id,
         createdBy:foundUser.email

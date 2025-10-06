@@ -4,7 +4,7 @@ const issue=new mongoose.Schema({
     description:String,
     photourl:String,
     location:String,
-    status:{type:String, default:"panding"},
+    status:{type:String, default:"pending"},
     userId:{type: mongoose.Schema.Types.ObjectId, ref:"sample"},
     createdBy:String
 

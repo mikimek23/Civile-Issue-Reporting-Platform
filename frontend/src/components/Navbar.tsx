@@ -5,25 +5,35 @@ import { toast } from "react-toastify";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState(null); 
   const navigate = useNavigate();
 
-  const navItems = [
+  const commonNavItems = [
     { name: "Home", path: "/" },
     { name: "Report", path: "/report" },
     { name: "View Issue", path: "/report/issues" },
   ];
 
-  const isActive = (path) => window.location.pathname === path;
+  const adminNavItems = [
+    { name: "Admin Dashboard", path: "/admin-dashboard" },
+  ];
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role"); 
     setIsLoggedIn(!!token);
+    setRole(role);
   }, []);
+
+  const navItemsToRender = role === "admin" ? adminNavItems : commonNavItems; 
+  const isActive = (path) => window.location.pathname === path;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    toast.info('You have logged out.')
+    localStorage.removeItem("role"); 
+    toast.info("You have logged out.");
     setIsLoggedIn(false);
+    setRole(null);
     navigate("/signin");
   };
 
@@ -33,9 +43,9 @@ const Navbar = () => {
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-xl font-bold">Civil Report</div>
 
-          
+          {/* Desktop Menu */}
           <div className="hidden lg:flex space-x-4">
-            {navItems.map((item) => (
+            {navItemsToRender.map((item) => (
               <a
                 key={item.name}
                 href={item.path}
@@ -68,7 +78,7 @@ const Navbar = () => {
             )}
           </div>
 
-          
+          {/* Mobile Hamburger */}
           <button
             className="relative ml-auto h-6 w-6 lg:hidden"
             onClick={() => setOpen(!open)}
@@ -88,10 +98,10 @@ const Navbar = () => {
             </svg>
           </button>
 
-          
+          {/* Mobile Menu */}
           {open && (
             <div className="md:hidden w-30 text-center h-fit absolute right-0.5 top-10 mx-auto bg-white shadow-md rounded-md pt-3">
-              {navItems.map((item) => (
+              {navItemsToRender.map((item) => (
                 <a
                   key={item.name}
                   href={item.path}

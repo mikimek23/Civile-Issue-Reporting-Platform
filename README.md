@@ -3,9 +3,11 @@ A simple web application for reporting and tracking community issues such as bro
 ## Features
 **User Side**
 -  *User Authentication* – Register and log in securely
--  *Submit Reports* – Title, description, photo, and geolocation
+-  *Submit Reports* – Title, description, photo, and location
 -  *Track Status*– Monitor progress from Pending → In Progress → Resolved
 -  *Report History* – View all your submitted issues
+
+  
  **Admin Side**
 -  *Admin Login*
 -  *Dashboard*– View and manage all community reports
@@ -19,8 +21,11 @@ A simple web application for reporting and tracking community issues such as bro
  ## Tech Stack
 
 **Frontend**:React, Tailwind CSS, Axios
+
 **Backend**:Node.js, Express.js
+
 **Database**:MongoDB
+
 **Authentication**:JWT (JSON Web Token)
 
 
@@ -31,7 +36,7 @@ Ensure you have the following installed:
 - MongoDB
  Installation
 # Clone the repository
-git clone https://github.com/your-username/civil-issue-reporting-platform.git
+git clone https://github.com/mikimek23/Civile-Issue-Reporting-Platform.git
 
 # Navigate into the project folder
 cd civil-issue-reporting-platform
@@ -41,9 +46,9 @@ npm install
 
 
  ## Running the App
-Frontend (React)
-cd frontend
-npm run dev
+- Frontend (React)
+- cd frontend
+- npm run dev
 
 
 Backend (Express)

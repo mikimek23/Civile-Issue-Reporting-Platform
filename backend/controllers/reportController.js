@@ -106,22 +106,28 @@ exports.reports=async(req,res)=>{
     }
 }
 //update issue
-exports.updateIssue=async(req,res)=>{
-    const [id]=req.parametr
-   const report= await issues.findOne({id:id});
-   report.status="recived";
-
-}
-exports.deleteIssue=async(req,res)=>{
+exports.updateIssue=async (req, res) => {
   try {
-    console.log("req.parametr.id")
-     await issues.findByIdAndDelete(req.parametr.id)
-   res.json({message:"Report deleted"})
-  } catch (error) {
-    console.log(error.message) 
-       res.status(500).json({
-        success:false,
-        message:"server error!!"})
+    const { status } = req.body;
+    const updatedReport = await issues.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+    res.json(updatedReport);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to update report status" });
   }
 }
-
+exports.deleteIssue=async (req, res) => {
+  try {
+    const deletedReport = await issues.findByIdAndDelete(req.params.id);
+    if (!deletedReport) {
+      return res.status(404).json({ error: "Report not found" });
+    }
+    res.json({ message: "Report deleted successfully" });
+  } catch (err) {
+    console.error("Delete error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+}

@@ -53,6 +53,35 @@ const res = await axios.get("http://localhost:5000/report/all-reports", {
       </div>
     );
   }
+  // Update status
+const updateStatus = async (id, newStatus) => {
+  try {
+    await axios.put(
+      `http://localhost:5000/report/update/${id}`,
+      { status: newStatus },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    // Refresh reports after update
+    setRport(report.map(r => r._id === id ? { ...r, status: newStatus } : r));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// Delete report
+const deleteReport = async (id) => {
+  try {
+    await axios.delete(
+      `http://localhost:5000/report/delete/${id}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    // Remove deleted report from UI
+    setRport(report.filter(r => r._id !== id));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
   const filter=(e)=>{
     setRport(report.filter(f=>f.title.toLowerCase().includes(e.target.value)))
   }
@@ -91,6 +120,26 @@ const res = await axios.get("http://localhost:5000/report/all-reports", {
                     <td className="border p-2">{report.location}</td>
                     <td className="border p-2">{report.createdAt ? new Date(report.createdAt).toLocaleDateString(): "-"}</td>
                     <td className="border p-2">{report.status}</td>
+                    <td className="border p-2">
+  
+  <select
+    value={report.status}
+    onChange={(e) => updateStatus(report._id, e.target.value)}
+    className="border rounded p-1"
+  >
+    <option value="pending">Pending</option>
+    <option value="in-progress">In Progress</option>
+    <option value="resolved">Resolved</option>
+  </select>
+
+  <button
+    onClick={() => deleteReport(report._id)}
+    className="ml-2 bg-red-500 text-white px-2 py-1 rounded"
+  >
+    Delete
+  </button>
+</td>
+
                   </tr>
                 )
               ))}

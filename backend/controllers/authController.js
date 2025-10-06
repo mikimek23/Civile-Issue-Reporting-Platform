@@ -20,11 +20,12 @@ exports.register=async(req, res)=>{
             password:hashedPassword,
             role:role?role:"user"
         })
-        const token=jwt.sign({id: user.id}, process.env.ACCESS_SECRET_KEY,{expiresIn:'1d'})
+        const token=jwt.sign({id: user.id, role: user.role}, process.env.ACCESS_SECRET_KEY,{expiresIn:'1d'})
         res.status(201).json({
             success:true,
             message:"user register successfully",
-            token
+            token,
+            role:user.role
         })
     } catch (error) {
       console.log(error.message)
@@ -56,11 +57,12 @@ exports.login=async(req, res)=>{
                 token:null
             })
         }
-        const token=jwt.sign({id:foundUser.id},process.env.ACCESS_SECRET_KEY,{expiresIn:"1d"})
+        const token=jwt.sign({id:foundUser.id, role: foundUser.role},process.env.ACCESS_SECRET_KEY,{expiresIn:"1d"})
         res.status(200).json({
             success:true,
             message:`Welcome ${foundUser.name}`,
-            token
+            token,
+            role:foundUser.role
         })
         
     } catch (error) {

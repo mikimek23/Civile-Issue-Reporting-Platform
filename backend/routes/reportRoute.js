@@ -6,7 +6,7 @@ const {authMiddleware}  = require('../middleware/authMiddleware');
 router.post('/',authMiddleware,reportController.report);
 router.get('/issues',authMiddleware,reportController.issues);
 router.get('/all-reports',authMiddleware,reportController.reports);
-router.put('/updateIssue:id',authMiddleware,reportController.updateIssue);
-router.put('/deleteIssue/:id',authMiddleware,reportController.deleteIssue);
+router.put('/update/:id',authMiddleware,reportController.updateIssue);
+router.delete('/delete/:id',authMiddleware,reportController.deleteIssue);
 
 module.exports = router

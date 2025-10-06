@@ -21,12 +21,20 @@ const Login = () => {
    e.preventDefault()
    try {
     const result=await axios.post("http://localhost:5000/auth/login",data)
-
+console.log(result.data)
     setMessage(result.data.message)
     setSuccess(result.data.success)
     if(result.data.success){
+      
       localStorage.setItem("token",result.data.token)
-      setTimeout(()=>navigate('/'),2000)
+      localStorage.setItem("role",result.data.role)
+      setTimeout(()=>{
+        if(result.data.role==="Admin"){
+          navigate('/admin/dashboard')
+        }else{
+          navigate('/')
+        }
+      },2000)
     }
 
    } catch (error) {

@@ -6,7 +6,7 @@ const Navbar = () => {
   const navItems=[
     {name:"Home", path:'/'},
     {name:"Report", path:'/report'},
-    {name:"View Issue", path:'/report/issue'}
+    {name:"View Issue", path:'/report/issues'}
   ];
   const isActive=(path)=>window.location.pathname===path;
   return (

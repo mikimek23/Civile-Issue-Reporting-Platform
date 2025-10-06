@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 import { FileEdit} from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const Report = () => {
     
@@ -11,8 +12,6 @@ const Report = () => {
         location:''
     });
     const [photoFile, setPhotoFile] = useState(null);
-    const [message, setMessage]=useState('');
-    const [success, setSuccess]=useState(false)
 
    const handleChange=(e)=>{
     const {id, value}=e.target;
@@ -54,8 +53,7 @@ const Report = () => {
                     'Authorization': `Bearer ${token}`
                 },
             });
-            setSuccess(response.data.success)
-            setMessage(response.data.message)
+            toast.success(response.data.message)
             if(response.data.success){
                 setTimeout(()=>{
                     navigate('/')
@@ -65,14 +63,11 @@ const Report = () => {
 
         } catch (error) {
            if(error.response){
-      setMessage(error.response.data.message)
-      setSuccess(error.response.data.success)
+      toast.error(error.response.data.message)
     }else if(error.request){
-      setMessage("Server not responsing. Please try again.")
-      setSuccess(false)
+      toast.error("Server not responsing. Please try again.")
     }else{
-      setMessage("Server unreachable. Please try again.")
-      setSuccess(false)
+      toast.error("Server unreachable. Please try again.")
     }
     console.log(error)
         }
@@ -91,9 +86,6 @@ const Report = () => {
               <h1 className=" flex text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                 <FileEdit className="w-8 h-8 mr-2 text-green-600" />Report Issue
               </h1>
-              <p style={{ color: success ? "green" : "red", marginTop: "1rem", fontSize:"1.5rem"}} className='text-center'>
-          {message}
-        </p>
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                   <label htmlFor='title' className="block mb-2 text-sm font-medium text-gray-900 mt-4 ">Issue Type</label>
                 <select id="title" name="title" value={data.title} onChange={handleChange} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 text-center' required>

@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react"
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Admindashboard = () => {
-  const [report, setRport]=useState([]);
+  const [report, setReport]=useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const token= localStorage.getItem("token")
@@ -21,7 +23,7 @@ const Admindashboard = () => {
 const res = await axios.get("http://localhost:5000/report/all-reports", {
           headers: { Authorization: `Bearer ${token}` },
         });
-           setRport(res.data)
+           setReport(res.data)
       } catch (err) {
         console.error("Fetch error:", err);
         setError(
@@ -53,7 +55,6 @@ const res = await axios.get("http://localhost:5000/report/all-reports", {
       </div>
     );
   }
-  // Update status
 const updateStatus = async (id, newStatus) => {
   try {
     await axios.put(
@@ -61,29 +62,44 @@ const updateStatus = async (id, newStatus) => {
       { status: newStatus },
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    // Refresh reports after update
-    setRport(report.map(r => r._id === id ? { ...r, status: newStatus } : r));
+    setReport(report.map(r => r._id === id ? { ...r, status: newStatus } : r));
+    toast.success("Status updated!");
   } catch (err) {
     console.error(err);
+    toast.error("Failed to update status!");
   }
 };
 
-// Delete report
+
 const deleteReport = async (id) => {
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "This report will be permanently deleted.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#30ff00",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  });
+   if (result.isConfirmed) {
   try {
     await axios.delete(
       `http://localhost:5000/report/delete/${id}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    // Remove deleted report from UI
-    setRport(report.filter(r => r._id !== id));
+    
+    setReport(report.filter(r => r._id !== id));
+    toast.info("Report deleted successfully!");
+
   } catch (err) {
+    toast.error("Failed to delete report!");
     console.error(err);
   }
+}
 };
 
   const filter=(e)=>{
-    setRport(report.filter(f=>f.title.toLowerCase().includes(e.target.value)))
+    setReport(report.filter(f=>f.title.toLowerCase().includes(e.target.value)))
   }
   return (
     

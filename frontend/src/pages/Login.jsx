@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { toast } from "react-toastify";
+
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 import { LogInIcon } from 'lucide-react';
@@ -7,9 +9,6 @@ const Login = () => {
         email:'',
         password:''
     });
-    const [message, setMessage]=useState('')
-    const [success,setSuccess]=useState()
-
    const handleChange=(e)=>{
     const {id, value}=e.target;
 
@@ -21,9 +20,9 @@ const Login = () => {
    e.preventDefault()
    try {
     const result=await axios.post("http://localhost:5000/auth/login",data)
-console.log(result.data)
-    setMessage(result.data.message)
-    setSuccess(result.data.success)
+
+     toast.success(result.data.message);
+
     if(result.data.success){
       
       localStorage.setItem("token",result.data.token)
@@ -39,20 +38,19 @@ console.log(result.data)
 
    } catch (error) {
     if(error.response){
-      setMessage(error.response.data.message)
-      setSuccess(error.response.data.success)
+      toast.error(error.response.data.message)
     }else if(error.request){
-      setMessage("Server not responsing. Please try again.")
-      setSuccess(false)
+      toast.error("Server not responsing. Please try again.")
     }else{
-      setMessage("Server unreachable. Please try again.")
-      setSuccess(false)
+      toast.error("Server unreachable. Please try again.")
     }
     console.log(error.message)
+    
+
    }
    }
 
-    const RegistratinForm=[
+    const LoginForm=[
         {label:"Email",type:"email",name:"email",id:"email", placeholder:"example@gmail.com", value:data.email},
         {label:"Password",type:"password",name:"password",id:"password", placeholder:"••••••••", value:data.password}
     ]
@@ -68,12 +66,9 @@ console.log(result.data)
               <h1 className=" flex text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                 <LogInIcon className="w-8 h-8 mr-2 text-green-600" />Sign In
               </h1>
-              <p style={{ color: success ? "green" : "red", marginTop: "1rem" ,fontSize:'1.5rem'}} className='text-center'>
-          {message}
-        </p>
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                   
-                    {RegistratinForm.map((item, index)=>(
+                    {LoginForm.map((item, index)=>(
                         <div key={index}>
                         <label htmlFor={item.id} className="block mb-2 text-sm font-medium text-gray-900 mt-4 ">{item.label}</label>
                         <input type={item.type} id={item.id} name={item.name} placeholder={item.placeholder} value={item.value} onChange={handleChange} className="bg-gray-50 bor++der border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required/> 

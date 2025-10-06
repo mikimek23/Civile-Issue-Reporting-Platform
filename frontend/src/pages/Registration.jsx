@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { UserRoundPlus } from 'lucide-react'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const Registration = () => {
 
@@ -10,8 +11,6 @@ const Registration = () => {
         email:'',
         password:''
     });
-    const [message,setMessage]=useState('')
-    const [success,setSuccess]=useState()
 
    const handleChange=(e)=>{
     const {id, value}=e.target;
@@ -25,8 +24,7 @@ const Registration = () => {
    try {
     const result=await axios.post("http://localhost:5000/auth/register",data)
 
-    setMessage(result.data.message)
-    setSuccess(result.data.success)
+    toast.success(result.data.message);
     if(result.data.success){
       localStorage.setItem("token",result.data.token)
       localStorage.setItem("role",result.data.role)
@@ -41,14 +39,11 @@ const Registration = () => {
 
    } catch (error) {
     if(error.response){
-      setMessage(error.response.data.message)
-      setSuccess(error.response.data.success)
+      toast.error(error.response.data.message)
     }else if(error.request){
-      setMessage("Server not responsing. Please try again.")
-      setSuccess(false)
+      toast.error("Server not responsing. Please try again.")
     }else{
-      setMessage("Server unreachable. Please try again.")
-      setSuccess(false)
+      toast.error("Server unreachable. Please try again.")
     }
     console.log(error)
    }
@@ -73,9 +68,6 @@ const Registration = () => {
               <h1 className=" flex text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                 <UserRoundPlus className="w-8 h-8 mr-2 text-green-600" />Sign Up
               </h1>
-              <p style={{ color: success ? "green" : "red", marginTop: "1rem" }} className='text-center'>
-          {message}
-        </p>
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                   
                     {RegistratinForm.map((item, index)=>(
